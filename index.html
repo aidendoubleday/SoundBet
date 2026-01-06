@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundBet</title>
+    <link rel="stylesheet" href="styles.css"
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">🎵 SoundBet</h1>
+            <div class="header-controls">
+                <button class="collection-toggle">📁 Collection</button>
+                <div class="currency-display">
+                    <span class="music-notes">♪ 2,847</span>
+                    <span class="currency-label">Music Notes</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Collection Sidebar -->
+    <div class="collection-sidebar">
+        <div class="sidebar-header">
+            <h2>Your Collection</h2>
+            <button class="close-sidebar">✕</button>
+        </div>
+        <div class="collection-scroll">
+            <!-- Owned Songs -->
+            <div class="song-card legendary owned">
+                <div class="song-info">
+                    <h4>Bohemian Rhapsody</h4>
+                    <p>Queen</p>
+                    <span class="rarity-badge">Legendary</span>
+                </div>
+            </div>
+            <div class="song-card epic owned">
+                <div class="song-info">
+                    <h4>Billie Jean</h4>
+                    <p>Michael Jackson</p>
+                    <span class="rarity-badge">Epic</span>
+                </div>
+            </div>
+            <div class="song-card rare owned">
+                <div class="song-info">
+                    <h4>Wonderwall</h4>
+                    <p>Oasis</p>
+                    <span class="rarity-badge">Rare</span>
+                </div>
+            </div>
+            <div class="song-card common owned">
+                <div class="song-info">
+                    <h4>Yesterday</h4>
+                    <p>The Beatles</p>
+                    <span class="rarity-badge">Common</span>
+                </div>
+            </div>
+            
+            <!-- Unowned Songs (Greyed Out) -->
+            <div class="song-card legendary unowned">
+                <div class="song-info">
+                    <h4>Stairway to Heaven</h4>
+                    <p>Led Zeppelin</p>
+                    <span class="rarity-badge">Legendary</span>
+                </div>
+            </div>
+            <div class="song-card epic unowned">
+                <div class="song-info">
+                    <h4>Thriller</h4>
+                    <p>Michael Jackson</p>
+                    <span class="rarity-badge">Epic</span>
+                </div>
+            </div>
+            <div class="song-card rare unowned">
+                <div class="song-info">
+                    <h4>Don't Stop Believin'</h4>
+                    <p>Journey</p>
+                    <span class="rarity-badge">Rare</span>
+                </div>
+            </div>
+            <div class="song-card common unowned">
+                <div class="song-info">
+                    <h4>Hey Jude</h4>
+                    <p>The Beatles</p>
+                    <span class="rarity-badge">Common</span>
+                </div>
+            </div>
+            <div class="song-card rare unowned">
+                <div class="song-info">
+                    <h4>Sweet Child O' Mine</h4>
+                    <p>Guns N' Roses</p>
+                    <span class="rarity-badge">Rare</span>
+                </div>
+            </div>
+            <div class="song-card common unowned">
+                <div class="song-info">
+                    <h4>Imagine</h4>
+                    <p>John Lennon</p>
+                    <span class="rarity-badge">Common</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Featured Wheel Game -->
+        <section class="wheel-section">
+            <h2 class="section-title">Spin the Wheel</h2>
+            <div class="game-container">
+                <div class="wheel-display">
+                    <div class="wheel">
+                        <div class="wheel-segment legendary">Legendary</div>
+                        <div class="wheel-segment epic">Epic</div>
+                        <div class="wheel-segment rare">Rare</div>
+                        <div class="wheel-segment common">Common</div>
+                        <div class="wheel-segment rare">Rare</div>
+                        <div class="wheel-segment common">Common</div>
+                        <div class="wheel-segment epic">Epic</div>
+                        <div class="wheel-segment common">Common</div>
+                    </div>
+                    <div class="wheel-pointer">▼</div>
+                </div>
+                <div class="game-controls">
+                    <div class="plays-counter">Plays Remaining: 3</div>
+                    <button class="spin-button">SPIN NOW</button>
+                    <button class="watch-ad-button">📺 Watch Ad for Extra Spin</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Games -->
+        <section class="other-games">
+            <h2 class="section-title">More Games</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3>🎰 Slots</h3>
+                    <p>Match 3 symbols to win songs</p>
+                    <button class="play-button">Play Slots</button>
+                </div>
+                <div class="game-card">
+                    <h3>🔴 Roulette</h3>
+                    <p>Bet on your favorite genre</p>
+                    <button class="play-button">Play Roulette</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Overlay for sidebar -->
+    <div class="sidebar-overlay"></div>
+</body>
+</html>
