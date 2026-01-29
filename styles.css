@@ -307,3 +307,24 @@ body {
     text-align: center;
     animation: neon-glow 5s;
 }
+
+/* Wheel segment background colors */
+.legendary-bg {
+    background: linear-gradient(135deg, #ffd700, #ffb347) !important;
+    color: #ffffff !important;
+}
+
+.epic-bg {
+    background: linear-gradient(135deg, #8a2be2, #9932cc) !important;
+    color: rgb(255, 255, 255) !important;
+}
+
+.rare-bg {
+    background: linear-gradient(135deg, #1e90ff, #4169e1) !important;
+    color: rgb(255, 255, 255) !important;
+}
+
+.common-bg {
+    background: linear-gradient(135deg, #a9a9a9, #808080) !important;
+    color: #ffffff !important;
+}
