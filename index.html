@@ -12,7 +12,7 @@
         <div class="header-content">
             <h1 class="logo">🎵 SoundBet</h1>
             <div class="header-controls">
-                <button class="collection-toggle">📁 Collection</button>
+                <button class="collection-toggle" id="collection-toggle">📁 Collection</button>
                 <div class="currency-display">
                     <span class="music-notes">♪ 2,847</span>
                     <span class="currency-label">Music Notes</span>
@@ -22,13 +22,14 @@
     </header>
 
     <!-- Collection Sidebar -->
-    <div class="collection-sidebar">
+    <div class="collection-sidebar" id="collection-sidebar">
         <div class="sidebar-header">
             <h2>Your Collection</h2>
-            <button class="close-sidebar">✕</button>
+            <button class="close-sidebar" id="close-sidebar">✕</button>
         </div>
-        <div class="collection-scroll">
-            <!-- Owned Songs -->
+        <div class="collection-scroll" id="collection-scroll">
+        <!-- JavaScript will fill this automatically -->
+        </div>
             <div class="song-card legendary owned">
                 <div class="song-info">
                     <h4>Bohemian Rhapsody</h4>
@@ -103,6 +104,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <!-- Main Content -->
     <main class="main-content">
