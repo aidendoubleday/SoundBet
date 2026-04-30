@@ -1,6 +1,5 @@
-console.log("Ready to test!");
-
 console.log("Javascript file loaded!");
+
 // Song collection data
 let songCollection = [
     {title: "Bohemian Rhapsody", artist: "Queen", rarity: "legendary", owned: true},
@@ -14,6 +13,12 @@ let songCollection = [
     {title: "Sweet Child O' Mine", artist: "Guns N' Roses", rarity: "rare", owned: false},
     {title: "Imagine", artist: "John Lennon", rarity: "common", owned: false}
 ];
+
+let playsRemaining = 3;
+
+// Wheel spinning variables
+let isSpinning = false;
+let currentRotation = 0;
 
 function displaySongsInCollection() {
     let container = document.getElementById('collection-scroll');
@@ -86,36 +91,132 @@ function displaySongsInCollection() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Setting up sidebar...");
+function updatePlaysDisplay() {
+    let playsCounter = document.querySelector('.plays-counter');
+    playsCounter.innerText = `Plays Remaining: ${playsRemaining}`;
+}
+
+function spinWheel() {
+    if (playsRemaining <= 0) {
+        alert("No plays remaining! Watch an ad or wait for more plays.");
+        return;
+    }
     
-    let button = document.getElementById('collection-toggle');
-    let sidebar = document.getElementById('collection-sidebar');
-    let overlay = document.getElementById('sidebar-overlay');
-    let closeButton = document.getElementById('close-sidebar');
+    if (isSpinning) {
+        return;
+    }
     
-    button.onclick = function() {
-        console.log("BUTTON CLICKED! Opening sidebar...");
-        sidebar.classList.add('open');
-        overlay.classList.add('active');
-        console.log("Added 'open' class to sidebar");
-        console.log("Added 'active' class to overlay");
-    };
+    isSpinning = true;
+    let spinButton = document.getElementById('spin-button');
+    let wheel = document.querySelector('.wheel');
     
-    closeButton.onclick = function() {
-        console.log("CLOSE BUTTON CLICKED! Closing sidebar...");
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-        console.log("Removed 'open' class from sidebar");
-        console.log("Removed 'active' class from overlay");
-    };
+    playsRemaining = playsRemaining - 1;
+    updatePlaysDisplay();
     
-    overlay.onclick = function() {
-        console.log("OVERLAY CLICKED! Closing sidebar...");
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-    };
+    spinButton.innerText = "SPINNING...";
     
-    console.log("Ready to test!");
-    displaySongsInCollection();
-});
+    let randomSpin = Math.random() * 360 + 1440;
+    currentRotation += randomSpin;
+    
+    wheel.style.transform = `rotate(${currentRotation}deg)`;
+    
+    setTimeout(function() {
+        let finalAngle = currentRotation % 360;
+        let result = getRarityFromAngle(finalAngle);
+        showSpinResult(result);
+        
+        if (playsRemaining <= 0) {
+            spinButton.innerText = "NO PLAYS LEFT";
+            spinButton.style.background = "gray";
+        } else {
+            spinButton.innerText = "SPIN NOW";
+        }
+        isSpinning = false;
+    }, 3000);
+}
+
+function getRandomRarity() {
+    let random = Math.random() * 100;
+    
+    if (random <= 5) {
+        return "legendary";
+    } else if (random <= 20) {
+        return "epic"; 
+    } else if (random <= 50) {
+        return "rare";
+    } else {
+        return "common";
+    }
+}
+
+function getRarityFromAngle(angle) {
+    // Your wheel has 8 segments, each taking up 45 degrees
+    let adjustedAngle = (360 - angle + 90) % 360;
+    
+    if (adjustedAngle >= 0 && adjustedAngle < 45) {
+        return "legendary";
+    } else if (adjustedAngle >= 45 && adjustedAngle < 90) {
+        return "epic";
+    } else if (adjustedAngle >= 90 && adjustedAngle < 135) {
+        return "epic";  // This was showing as "rare" but should be "epic"
+    } else if (adjustedAngle >= 135 && adjustedAngle < 180) {
+        return "epic";  // This was showing as "common" but should be "epic"
+    } else if (adjustedAngle >= 180 && adjustedAngle < 225) {
+        return "rare";
+    } else if (adjustedAngle >= 225 && adjustedAngle < 270) {
+        return "common";
+    } else if (adjustedAngle >= 270 && adjustedAngle < 315) {
+        return "legendary";  // This was showing as "epic" but should be "legendary"
+    } else {
+        return "common";
+
+        console.log("Calculated result:", result);
+        return result;
+    }
+}
+
+function showSpinResult(rarity) {
+    alert(`You won a ${rarity.toUpperCase()} song!`);
+    console.log("Spin result:", rarity);
+}
+
+// Setup everything when page loads
+console.log("Setting up sidebar...");
+
+let button = document.getElementById('collection-toggle');
+let sidebar = document.getElementById('collection-sidebar');
+let overlay = document.getElementById('sidebar-overlay');
+let closeButton = document.getElementById('close-sidebar');
+
+button.onclick = function() {
+    console.log("BUTTON CLICKED! Opening sidebar...");
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    console.log("Added 'open' class to sidebar");
+    console.log("Added 'active' class to overlay");
+};
+
+closeButton.onclick = function() {
+    console.log("CLOSE BUTTON CLICKED! Closing sidebar...");
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    console.log("Removed 'open' class from sidebar");
+    console.log("Removed 'active' class from overlay");
+};
+
+overlay.onclick = function() {
+    console.log("OVERLAY CLICKED! Closing sidebar...");
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+};
+
+let spinButton = document.getElementById('spin-button');
+spinButton.onclick = function() {
+    console.log("Spin button clicked!");
+    spinWheel();
+};
+
+displaySongsInCollection();
+updatePlaysDisplay();
+
+console.log("Ready to test!");
