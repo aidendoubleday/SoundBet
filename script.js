@@ -115,14 +115,34 @@ function spinWheel() {
     
     spinButton.innerText = "SPINNING...";
     
-    let randomSpin = Math.random() * 360 + 1440;
-    currentRotation += randomSpin;
+    // Pick random rarity using existing function
+    let result = getRandomRarity();
+    console.log("Target rarity:", result);
     
-    wheel.style.transform = `rotate(${currentRotation}deg)`;
+    // Calculate angle based on wheel layout (with pointer pointing down)
+    let targetAngle;
+    if (result === "legendary") {
+        targetAngle = 315; // Point to top-left (315 degrees)
+    } else if (result === "epic") {
+        targetAngle = 45; // Point to top-right (45 degrees)
+    } else if (result === "rare") {
+        targetAngle = 225; // Point to bottom-left (225 degrees)
+    } else if (result === "common") {
+        targetAngle = 135; // Point to bottom-right (135 degrees)
+    }
     
+    // Add more spins for longer visual effect
+    let extraSpins = 2160; // 6 full rotations instead of 4
+    let finalRotation = currentRotation + extraSpins + targetAngle;
+    currentRotation = finalRotation;
+    
+    console.log("Target angle:", targetAngle);
+    console.log("Final rotation:", finalRotation);
+    
+    wheel.style.transform = `rotate(${finalRotation}deg)`;
+    
+    // Changed from 3000ms to 4500ms (4.5 seconds)
     setTimeout(function() {
-        let finalAngle = currentRotation % 360;
-        let result = getRarityFromAngle(finalAngle);
         showSpinResult(result);
         
         if (playsRemaining <= 0) {
@@ -132,7 +152,7 @@ function spinWheel() {
             spinButton.innerText = "SPIN NOW";
         }
         isSpinning = false;
-    }, 3000);
+    }, 4500);
 }
 
 function getRandomRarity() {
@@ -149,34 +169,7 @@ function getRandomRarity() {
     }
 }
 
-function getRarityFromAngle(angle) {
-    // Your wheel has 8 segments, each taking up 45 degrees
-    let adjustedAngle = (360 - angle + 90) % 360;
-    
-    if (adjustedAngle >= 0 && adjustedAngle < 45) {
-        return "legendary";
-    } else if (adjustedAngle >= 45 && adjustedAngle < 90) {
-        return "epic";
-    } else if (adjustedAngle >= 90 && adjustedAngle < 135) {
-        return "epic";  // This was showing as "rare" but should be "epic"
-    } else if (adjustedAngle >= 135 && adjustedAngle < 180) {
-        return "epic";  // This was showing as "common" but should be "epic"
-    } else if (adjustedAngle >= 180 && adjustedAngle < 225) {
-        return "rare";
-    } else if (adjustedAngle >= 225 && adjustedAngle < 270) {
-        return "common";
-    } else if (adjustedAngle >= 270 && adjustedAngle < 315) {
-        return "legendary";  // This was showing as "epic" but should be "legendary"
-    } else {
-        return "common";
-
-        console.log("Calculated result:", result);
-        return result;
-    }
-}
-
 function showSpinResult(rarity) {
-    alert(`You won a ${rarity.toUpperCase()} song!`);
     console.log("Spin result:", rarity);
 }
 
