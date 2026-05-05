@@ -115,44 +115,34 @@ function spinWheel() {
     
     spinButton.innerText = "SPINNING...";
     
-    // Pick random rarity using existing function
-    let result = getRandomRarity();
-    console.log("Target rarity:", result);
+    // Get target rarity and log it to console
+    let targetRarity = getRandomRarity();
+    console.log("Target rarity:", targetRarity);
     
-    // Calculate angle based on wheel layout (with pointer pointing down)
-    let targetAngle;
-    if (result === "legendary") {
-        targetAngle = 315; // Point to top-left (315 degrees)
-    } else if (result === "epic") {
-        targetAngle = 45; // Point to top-right (45 degrees)
-    } else if (result === "rare") {
-        targetAngle = 225; // Point to bottom-left (225 degrees)
-    } else if (result === "common") {
-        targetAngle = 135; // Point to bottom-right (135 degrees)
+    // Use if/else to set degrees based on target rarity
+    let targetDegrees;
+    if (targetRarity === "legendary") {
+        targetDegrees = 22.5; // Middle of 0-45 range
+        console.log("Going to legendary at 22.5 degrees");
+    } else if (targetRarity === "epic") {
+        targetDegrees = 67.5; // Middle of 45-90 range
+        console.log("Going to epic at 67.5 degrees");
+    } else if (targetRarity === "rare") {
+        targetDegrees = 112.5; // Middle of 90-135 range
+        console.log("Going to rare at 112.5 degrees");
+    } else if (targetRarity === "common") {
+        targetDegrees = 157.5; // Middle of 135-180 range
+        console.log("Going to common at 157.5 degrees");
     }
     
-    // Add more spins for longer visual effect
-    let extraSpins = 2160; // 6 full rotations instead of 4
-    let finalRotation = currentRotation + extraSpins + targetAngle;
-    currentRotation = finalRotation;
+    // Apply transform to spin wheel
+    wheel.style.transform = `rotate(${targetDegrees}deg)`;
     
-    console.log("Target angle:", targetAngle);
-    console.log("Final rotation:", finalRotation);
-    
-    wheel.style.transform = `rotate(${finalRotation}deg)`;
-    
-    // Changed from 3000ms to 4500ms (4.5 seconds)
     setTimeout(function() {
-        showSpinResult(result);
-        
-        if (playsRemaining <= 0) {
-            spinButton.innerText = "NO PLAYS LEFT";
-            spinButton.style.background = "gray";
-        } else {
-            spinButton.innerText = "SPIN NOW";
-        }
+        console.log("Spin complete - should have landed on:", targetRarity);
+        spinButton.innerText = "SPIN NOW";
         isSpinning = false;
-    }, 4500);
+    }, 3000);
 }
 
 function getRandomRarity() {

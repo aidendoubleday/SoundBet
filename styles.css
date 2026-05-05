@@ -219,7 +219,7 @@ body {
     flex-wrap: wrap;
     position: relative;
     overflow: hidden;
-    transition: transform 4.5s ease-out;
+    transition: rotate(45deg);
 }
 
 .wheel-segment {
