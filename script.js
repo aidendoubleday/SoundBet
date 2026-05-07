@@ -16,6 +16,18 @@ let songCollection = [
 
 let playsRemaining = 3;
 
+let savedSongs = localStorage.getItem('songCollection');
+if (savedSongs !== null) {
+    songCollection = JSON.parse(savedSongs);
+    console.log("Loaded saved songs!");
+}
+
+let savedPlays = localStorage.getItem('playsRemaining');
+if (savedPlays !== null) {
+    playsRemaining = Number(savedPlays);
+    console.log("Loaded saved plays:", playsRemaining);
+}
+
 // Wheel spinning variables
 let isSpinning = false;
 let currentRotation = 0;
@@ -97,49 +109,51 @@ function updatePlaysDisplay() {
 }
 
 function spinWheel() {
-    if (playsRemaining <= 0) {
-        alert("No plays remaining! Watch an ad or wait for more plays.");
-        return;
-    }
-    
-    if (isSpinning) {
+    if (playsRemaining <= 0 || isSpinning) {
         return;
     }
     
     isSpinning = true;
+    playsRemaining = playsRemaining - 1;
+    localStorage.setItem('playsRemaining', playsRemaining);
+    localStorage.setItem('songCollection', JSON.stringify(songCollection));
+    console.log("Saved! Plays:", playsRemaining);
+    updatePlaysDisplay();
+    
     let spinButton = document.getElementById('spin-button');
     let wheel = document.querySelector('.wheel');
     
-    playsRemaining = playsRemaining - 1;
-    updatePlaysDisplay();
-    
     spinButton.innerText = "SPINNING...";
     
-    // Get target rarity and log it to console
     let targetRarity = getRandomRarity();
-    console.log("Target rarity:", targetRarity);
+    console.log("Target:", targetRarity);
     
-    // Use if/else to set degrees based on target rarity
-    let targetDegrees;
-    if (targetRarity === "legendary") {
-        targetDegrees = 22.5; // Middle of 0-45 range
-        console.log("Going to legendary at 22.5 degrees");
-    } else if (targetRarity === "epic") {
-        targetDegrees = 67.5; // Middle of 45-90 range
-        console.log("Going to epic at 67.5 degrees");
-    } else if (targetRarity === "rare") {
-        targetDegrees = 112.5; // Middle of 90-135 range
-        console.log("Going to rare at 112.5 degrees");
-    } else if (targetRarity === "common") {
-        targetDegrees = 157.5; // Middle of 135-180 range
-        console.log("Going to common at 157.5 degrees");
+    let targetAngle;
+        if (targetRarity === "legendary") {
+    targetAngle = 45;  // Changed from 315
+        } else if (targetRarity === "epic") {
+    targetAngle = 315;  // Changed from 45
+        } else if (targetRarity === "rare") {
+    targetAngle = 135;
+        } else {
+    targetAngle = 225;
     }
     
-    // Apply transform to spin wheel
-    wheel.style.transform = `rotate(${targetDegrees}deg)`;
+    // Calculate where we currently are
+    let currentAngle = currentRotation % 360;
+    if (currentAngle < 0) currentAngle += 360;
+    
+    // Calculate shortest distance to target
+    let difference = targetAngle - currentAngle;
+    
+    // Add 1440 (4 spins) plus the difference
+    currentRotation = currentRotation + 1440 + difference;
+    
+    console.log("Spinning to total rotation:", currentRotation);
+    
+    wheel.style.transform = `rotate(${currentRotation}deg)`;
     
     setTimeout(function() {
-        console.log("Spin complete - should have landed on:", targetRarity);
         spinButton.innerText = "SPIN NOW";
         isSpinning = false;
     }, 3000);
@@ -157,6 +171,26 @@ function getRandomRarity() {
     } else {
         return "common";
     }
+}
+
+function watchAd() {
+    let adButton = document.getElementById('watch-ad-button');
+    
+    // Disable button and show "ad playing"
+    adButton.innerText = "📺 Playing Ad...";
+    adButton.disabled = true;
+    
+    // Wait 3 seconds (pretend ad is playing)
+    setTimeout(function() {
+        playsRemaining = playsRemaining + 1;
+        updatePlaysDisplay();
+        localStorage.setItem('playsRemaining', playsRemaining);
+        
+        adButton.innerText = "📺 Watch Ad for Extra Spin";
+        adButton.disabled = false;
+        
+        console.log("Ad watched! Added 1 spin(s). Total:", playsRemaining);
+    }, 3000);
 }
 
 function showSpinResult(rarity) {
@@ -197,6 +231,12 @@ let spinButton = document.getElementById('spin-button');
 spinButton.onclick = function() {
     console.log("Spin button clicked!");
     spinWheel();
+};
+
+let adButton = document.getElementById('watch-ad-button');
+adButton.onclick = function() {
+    console.log("Watch ad button clicked!");
+    watchAd();
 };
 
 displaySongsInCollection();
