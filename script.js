@@ -190,7 +190,7 @@ function watchAd() {
         adButton.disabled = false;
         
         console.log("Ad watched! Added 1 spin(s). Total:", playsRemaining);
-    }, 3000);
+    }, 8000);
 }
 
 function showSpinResult(rarity) {
