@@ -329,3 +329,11 @@ body {
     background: linear-gradient(135deg, #a9a9a9, #808080) !important;
     color: #ffffff !important;
 }
+
+.spin-cost {
+    color: #ffd700;
+    font-size: 1rem;
+    text-align: center;
+    margin: -0.5rem 0 1rem 0;
+    font-weight: bold;
+}

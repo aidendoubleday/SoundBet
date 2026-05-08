@@ -15,6 +15,7 @@ let songCollection = [
 ];
 
 let playsRemaining = 3;
+let musicNotes = 3000;
 
 let savedSongs = localStorage.getItem('songCollection');
 if (savedSongs !== null) {
@@ -26,6 +27,12 @@ let savedPlays = localStorage.getItem('playsRemaining');
 if (savedPlays !== null) {
     playsRemaining = Number(savedPlays);
     console.log("Loaded saved plays:", playsRemaining);
+}
+
+let savedNotes = localStorage.getItem('musicNotes');
+if (savedNotes !== null) {
+    musicNotes = Number(savedNotes);
+    console.log("Loaded saved music notes:", musicNotes);
 }
 
 // Wheel spinning variables
@@ -108,17 +115,32 @@ function updatePlaysDisplay() {
     playsCounter.innerText = `Plays Remaining: ${playsRemaining}`;
 }
 
+function updateMusicNotesDisplay() {
+    let notesDisplay = document.querySelector('.music-notes');
+    notesDisplay.innerText = `♪ ${musicNotes}`;
+}
+
 function spinWheel() {
+    let spinCost = 100;
+
     if (playsRemaining <= 0 || isSpinning) {
+        return;
+    }
+
+    if (musicNotes < spinCost) {
+        alert("Not enough Music Notes! You need ♪ " + spinCost + " to spin.");
         return;
     }
     
     isSpinning = true;
     playsRemaining = playsRemaining - 1;
+    musicNotes = musicNotes - spinCost;
     localStorage.setItem('playsRemaining', playsRemaining);
+    localStorage.setItem('musicNotes', musicNotes);
     localStorage.setItem('songCollection', JSON.stringify(songCollection));
-    console.log("Saved! Plays:", playsRemaining);
+    console.log("Saved! Plays:", playsRemaining, "Notes:", musicNotes);
     updatePlaysDisplay();
+    updateMusicNotesDisplay();
     
     let spinButton = document.getElementById('spin-button');
     let wheel = document.querySelector('.wheel');
@@ -180,16 +202,30 @@ function watchAd() {
     adButton.innerText = "📺 Playing Ad...";
     adButton.disabled = true;
     
-    // Wait 3 seconds (pretend ad is playing)
+    // Wait 8 seconds (pretend ad is playing)
     setTimeout(function() {
+        // Add 1 spin
         playsRemaining = playsRemaining + 1;
-        updatePlaysDisplay();
-        localStorage.setItem('playsRemaining', playsRemaining);
         
-        adButton.innerText = "📺 Watch Ad for Extra Spin";
+        // Add 50 Music Notes
+        musicNotes = musicNotes + 50;
+        
+        // Update displays
+        updatePlaysDisplay();
+        updateMusicNotesDisplay();
+        
+        // Save to localStorage
+        localStorage.setItem('playsRemaining', playsRemaining);
+        localStorage.setItem('musicNotes', musicNotes);
+        
+        // Show alert (ADD THIS HERE!)
+        alert("Ad finished! 50 Music Notes and 1 Spin awarded!");
+        
+        // Re-enable button
+        adButton.innerText = "📺 Watch Ad for Extra Spin and 50 Music Notes";
         adButton.disabled = false;
         
-        console.log("Ad watched! Added 1 spin(s). Total:", playsRemaining);
+        console.log("Ad watched! Added 1 spin and 50 notes. Total notes:", musicNotes);
     }, 8000);
 }
 
@@ -241,5 +277,6 @@ adButton.onclick = function() {
 
 displaySongsInCollection();
 updatePlaysDisplay();
+updateMusicNotesDisplay();
 
 console.log("Ready to test!");
