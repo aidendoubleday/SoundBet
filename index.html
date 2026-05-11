@@ -35,6 +35,80 @@
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
+    <!-- Roulette Full Screen -->
+    <div class="roulette-overlay" id="roulette-overlay"></div>
+    <div class="roulette-fullscreen" id="roulette-fullscreen">
+        <div class="roulette-header">
+            <h2>🔴 Roulette</h2>
+            <button class="close-roulette" id="close-roulette">← Back</button>
+        </div>
+        
+        <div class="roulette-content">
+            <div class="roulette-info">
+                <p style="color: #06ffa5; font-size: 1.2rem; margin-bottom: 1rem;">
+                    Pick a genre and place your bet!
+                </p>
+                <p style="color: #cccccc; font-size: 0.9rem;">
+                    Win = 2x your bet | Lose = Lose your bet
+                </p>
+            </div>
+            
+            <div class="bet-section">
+                <label style="color: #ffbe0b; font-weight: bold; font-size: 1.2rem;">Bet Amount:</label>
+                <input type="number" id="bet-amount" value="100" min="50" max="1000" 
+                       style="padding: 0.8rem; border-radius: 10px; border: 3px solid #8338ec; 
+                       background: rgba(255,255,255,0.1); color: white; width: 150px; 
+                       font-size: 1.2rem; font-weight: bold; margin-left: 1rem;">
+            </div>
+            
+            <div class="genre-selection">
+                <p style="color: #06ffa5; font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem;">
+                    Choose Your Genre:
+                </p>
+                <div class="genre-buttons">
+                    <button class="genre-button-large" id="genre-rock">🎸 Rock</button>
+                    <button class="genre-button-large" id="genre-pop">🎤 Pop</button>
+                    <button class="genre-button-large" id="genre-hiphop">🎧 Hip-Hop</button>
+                    <button class="genre-button-large" id="genre-jazz">🎷 Jazz</button>
+                </div>
+            </div>
+            
+            <div id="roulette-result" class="roulette-result"></div>
+        </div>
+    </div>
+
+    <!-- Slots Full Screen -->
+    <div class="slots-overlay" id="slots-overlay"></div>
+    <div class="slots-fullscreen" id="slots-fullscreen">
+        <div class="slots-header">
+            <h2>🎰 Slot Machine</h2>
+            <button class="close-slots" id="close-slots">← Back</button>
+        </div>
+        
+        <div class="slots-content">
+            <div class="slots-info">
+                <p style="color: #06ffa5; font-size: 1.2rem; margin-bottom: 1rem;">
+                    Match 3 symbols to win!
+                </p>
+                <p style="color: #cccccc; font-size: 0.9rem;">
+                    Cost: ♪ 50 per spin
+                </p>
+            </div>
+            
+            <div class="slot-machine">
+                <div class="slot-display">
+                    <div class="slot-symbol" id="slot1">🎵</div>
+                    <div class="slot-symbol" id="slot2">🎸</div>
+                    <div class="slot-symbol" id="slot3">🎤</div>
+                </div>
+            </div>
+            
+            <button class="slots-spin-button" id="slots-spin-button">SPIN SLOTS</button>
+            
+            <div id="slots-result" class="slots-result"></div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- Featured Wheel Game -->
@@ -66,12 +140,12 @@
                 <div class="game-card">
                     <h3>🎰 Slots</h3>
                     <p>Match 3 symbols to win songs</p>
-                    <button class="play-button">Play Slots</button>
+                    <button class="play-button" id="open-slots">Play Slots</button>
                 </div>
                 <div class="game-card">
                     <h3>🔴 Roulette</h3>
                     <p>Bet on your favorite genre</p>
-                    <button class="play-button">Play Roulette</button>
+                    <button class="play-button" id="open-roulette">Play Roulette</button>
                 </div>
             </div>
         </section>
