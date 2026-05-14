@@ -17,6 +17,42 @@ let songCollection = [
 let playsRemaining = 3;
 let musicNotes = 3000;
 
+// Statistics tracking
+let totalSpins = 0;
+let wheelWins = 0;
+let rouletteWins = 0;
+let rouletteLosses = 0;
+let slotsWins = 0;
+let slotsLosses = 0;
+let totalNotesEarned = 0;
+
+// Load statistics from localStorage
+let savedStats = localStorage.getItem('playerStats');
+if (savedStats !== null) {
+    let stats = JSON.parse(savedStats);
+    totalSpins = stats.totalSpins;
+    wheelWins = stats.wheelWins;
+    rouletteWins = stats.rouletteWins;
+    rouletteLosses = stats.rouletteLosses;
+    slotsWins = stats.slotsWins;
+    slotsLosses = stats.slotsLosses;
+    totalNotesEarned = stats.totalNotesEarned;
+    console.log("Loaded player stats!");
+}
+
+function saveStatistics() {
+    let stats = {
+        totalSpins: totalSpins,
+        wheelWins: wheelWins,
+        rouletteWins: rouletteWins,
+        rouletteLosses: rouletteLosses,
+        slotsWins: slotsWins,
+        slotsLosses: slotsLosses,
+        totalNotesEarned: totalNotesEarned
+    };
+    localStorage.setItem('playerStats', JSON.stringify(stats));
+}
+
 let savedSongs = localStorage.getItem('songCollection');
 if (savedSongs !== null) {
     songCollection = JSON.parse(savedSongs);
@@ -135,6 +171,7 @@ function spinWheel() {
     isSpinning = true;
     playsRemaining = playsRemaining - 1;
     musicNotes = musicNotes - spinCost;
+    totalSpins = totalSpins + 1;
     localStorage.setItem('playsRemaining', playsRemaining);
     localStorage.setItem('musicNotes', musicNotes);
     localStorage.setItem('songCollection', JSON.stringify(songCollection));
@@ -183,6 +220,8 @@ function spinWheel() {
     let unlockedSong = unlockRandomSong(targetRarity);
     
     if (unlockedSong !== null) {
+        wheelWins = wheelWins + 1;
+        saveStatistics();
         alert("🎉 You won: " + unlockedSong.title + " by " + unlockedSong.artist + "!");
     } else {
         alert("You already own all " + targetRarity + " songs! Here's ♪ 50 instead.");
@@ -322,9 +361,14 @@ function playRoulette(chosenGenre) {
         if (chosenGenre === winningGenre) {
             let winnings = betAmount * 3;
             musicNotes = musicNotes + winnings;
+            rouletteWins = rouletteWins + 1;
+            totalNotesEarned = totalNotesEarned + (betAmount * 2);
+            saveStatistics();
             resultDisplay.innerText = "🎉 YOU WON ♪ " + winnings + "!";
             resultDisplay.style.color = "#06ffa5";
         } else {
+            rouletteLosses = rouletteLosses + 1;
+            saveStatistics();
             resultDisplay.innerText = "❌ Lost! Winner was " + winningGenre.toUpperCase();
             resultDisplay.style.color = "#ff006e";
         }
