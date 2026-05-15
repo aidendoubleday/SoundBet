@@ -12,6 +12,7 @@
         <div class="header-content">
             <h1 class="logo">🎵 SoundBet</h1>
             <div class="header-controls">
+                <button class="collection-toggle" id="stats-toggle">📊 Stats</button>
                 <button class="collection-toggle" id="collection-toggle">📁 Collection</button>
                 <div class="currency-display">
                     <span class="music-notes">♪ 3000</span>
@@ -29,6 +30,52 @@
         </div>
         <div class="collection-scroll" id="collection-scroll">
             <!-- JavaScript will fill this automatically -->
+        </div>
+    </div>
+
+    <!-- Statistics Sidebar -->
+    <div class="stats-sidebar" id="stats-sidebar">
+        <div class="sidebar-header">
+            <h2>Your Statistics</h2>
+            <button class="close-sidebar" id="close-stats">✕</button>
+        </div>
+        <div class="stats-content">
+            <div class="stat-card">
+                <h3>🎰 Total Spins</h3>
+                <p class="stat-number" id="stat-total-spins">0</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🎵 Songs Collected</h3>
+                <p class="stat-number" id="stat-songs-collected">0 / 10</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🎡 Wheel Wins</h3>
+                <p class="stat-number" id="stat-wheel-wins">0</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🔴 Roulette Record</h3>
+                <p class="stat-number" id="stat-roulette">0W - 0L</p>
+                <p class="stat-percent" id="stat-roulette-percent">Win Rate: 0%</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🎰 Slots Record</h3>
+                <p class="stat-number" id="stat-slots">0W - 0L</p>
+                <p class="stat-percent" id="stat-slots-percent">Win Rate: 0%</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>💰 Total Notes Earned</h3>
+                <p class="stat-number" id="stat-notes-earned">♪ 0</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🏆 Rarest Song</h3>
+                <p class="stat-number" id="stat-rarest-song">None yet</p>
+            </div>
         </div>
     </div>
 

@@ -263,6 +263,8 @@ function watchAd() {
         
         // Add 50 Music Notes
         musicNotes = musicNotes + 50;
+        totalNotesEarned = totalNotesEarned + 50;
+        saveStatistics();
         
         // Update displays
         updatePlaysDisplay();
@@ -294,6 +296,9 @@ let button = document.getElementById('collection-toggle');
 let sidebar = document.getElementById('collection-sidebar');
 let overlay = document.getElementById('sidebar-overlay');
 let closeButton = document.getElementById('close-sidebar');
+let statsButton = document.getElementById('stats-toggle');
+let statsSidebar = document.getElementById('stats-sidebar');
+let closeStatsButton = document.getElementById('close-stats');
 
 button.onclick = function() {
     console.log("BUTTON CLICKED! Opening sidebar...");
@@ -314,6 +319,7 @@ closeButton.onclick = function() {
 overlay.onclick = function() {
     console.log("OVERLAY CLICKED! Closing sidebar...");
     sidebar.classList.remove('open');
+    statsSidebar.classList.remove('open');
     overlay.classList.remove('active');
 };
 
@@ -526,6 +532,8 @@ function playSlots() {
                 resultDisplay.style.color = "#06ffa5";
             }
         } else {
+            slotsLosses = slotsLosses + 1;
+            saveStatistics();
             // LOSE
             resultDisplay.innerText = "❌ No match! Try again!";
             resultDisplay.style.color = "#ff006e";
@@ -562,6 +570,64 @@ slotsOverlay.onclick = function() {
 let slotsSpin = document.getElementById('slots-spin-button');
 slotsSpin.onclick = function() {
     playSlots();
+};
+
+// Statistics display functions
+function updateStatisticsDisplay() {
+    document.getElementById('stat-total-spins').innerText = totalSpins;
+    
+    // Count owned songs
+    let ownedCount = 0;
+    for (let i = 0; i < songCollection.length; i++) {
+        if (songCollection[i].owned) {
+            ownedCount = ownedCount + 1;
+        }
+    }
+    document.getElementById('stat-songs-collected').innerText = ownedCount + " / " + songCollection.length;
+    
+    document.getElementById('stat-wheel-wins').innerText = wheelWins;
+    
+    // Roulette stats
+    document.getElementById('stat-roulette').innerText = rouletteWins + "W - " + rouletteLosses + "L";
+    let rouletteTotal = rouletteWins + rouletteLosses;
+    let rouletteWinRate = rouletteTotal > 0 ? Math.round((rouletteWins / rouletteTotal) * 100) : 0;
+    document.getElementById('stat-roulette-percent').innerText = "Win Rate: " + rouletteWinRate + "%";
+    
+    // Slots stats
+    document.getElementById('stat-slots').innerText = slotsWins + "W - " + slotsLosses + "L";
+    let slotsTotal = slotsWins + slotsLosses;
+    let slotsWinRate = slotsTotal > 0 ? Math.round((slotsWins / slotsTotal) * 100) : 0;
+    document.getElementById('stat-slots-percent').innerText = "Win Rate: " + slotsWinRate + "%";
+    
+    document.getElementById('stat-notes-earned').innerText = "♪ " + totalNotesEarned;
+    
+    // Find rarest owned song
+    let rarestSong = "None yet";
+    let rarityOrder = ["legendary", "epic", "rare", "common"];
+    for (let i = 0; i < rarityOrder.length; i++) {
+        for (let j = 0; j < songCollection.length; j++) {
+            if (songCollection[j].owned && songCollection[j].rarity === rarityOrder[i]) {
+                rarestSong = songCollection[j].title;
+                break;
+            }
+        }
+        if (rarestSong !== "None yet") {
+            break;
+        }
+    }
+    document.getElementById('stat-rarest-song').innerText = rarestSong;
+}
+
+statsButton.onclick = function() {
+    updateStatisticsDisplay();
+    statsSidebar.classList.add('open');
+    overlay.classList.add('active');
+};
+
+closeStatsButton.onclick = function() {
+    console.log("CLOSE STATS CLICKED!");
+    statsSidebar.classList.remove('open');
+    overlay.classList.remove('active');
 };
 
 displaySongsInCollection();
